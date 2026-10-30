@@ -1,0 +1,5 @@
+build:
+  docker:
+    web: Dockerfile
+run:
+  web: sh -c 'export GOOGLE_API_KEY="${GOOGLE_API_KEY:-${GEMINI_API_KEY:-}}"; (cd /app/agent && node dist/server.js) & exec /app/backend/nexo-assist'

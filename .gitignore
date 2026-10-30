@@ -1,0 +1,12 @@
+node_modules/
+frontend/dist/
+agent/dist/
+backend/backend
+backend/nexo-assist
+.env
+.env.*
+!.env.example
+coverage/
+*.log
+.DS_Store
+*.tsbuildinfo
