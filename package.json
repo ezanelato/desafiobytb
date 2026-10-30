@@ -1,0 +1,14 @@
+{
+  "name": "nexo-assist",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "agent"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace frontend",
+    "build": "npm run build --workspace frontend && npm run build --workspace agent",
+    "preview": "npm run preview --workspace frontend",
+    "format": "prettier --write \"frontend/src/**/*.{ts,tsx,css}\" \"frontend/apps/**/*.{ts,tsx,css}\" \"frontend/packages/**/*.{ts,tsx,css}\" \"agent/src/**/*.ts\" \"*.json\" \"frontend/*.json\" \"agent/*.json\" \"README.md\""
+  }
+}
