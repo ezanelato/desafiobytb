@@ -1,0 +1,36 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      DATABASE_URL: postgres://nexo:nexo@db:5432/nexo_assist?sslmode=disable
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.5-flash-lite}
+      GEMINI_DAILY_LIMIT: ${GEMINI_DAILY_LIMIT:-500}
+      GOOGLE_API_KEY: ${GEMINI_API_KEY:-}
+      AGENT_SERVICE_URL: http://127.0.0.1:4112/respond
+      JWT_SECRET: ${JWT_SECRET:-local-demo-change-me}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: nexo_assist
+      POSTGRES_USER: nexo
+      POSTGRES_PASSWORD: nexo
+    volumes:
+      - nexo-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexo -d nexo_assist"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  nexo-postgres:
